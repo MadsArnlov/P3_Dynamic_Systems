@@ -1,0 +1,179 @@
+% LaTeX template, preamble file
+% ------------------------------------------------------------------------------
+% This is the preamble file for the project, in which package dependencies and
+% custom commands should be defined.
+
+
+% Base packages ----------------------------------------------------------------
+\usepackage{verbatim}
+\usepackage[T1]{fontenc}     % adds support for printing accented characters
+\usepackage[utf8]{inputenc}  % adds support for inputting accented characters
+\usepackage[british]{babel}  % set document language
+\usepackage[square]{natbib}  % set citation style to use square brackets
+\usepackage{hyperref}        % insert clickable hyperlinks
+\usepackage{lastpage}        % reference last page (used to count numbered pages)
+
+
+% Math packages ----------------------------------------------------------------
+
+\usepackage{mathtools}  % math commands and environments
+\usepackage{amssymb}    % additional math symbols
+\usepackage{bbm}        % improved 'blackboard bold' styling
+\usepackage{siunitx}    % si-units
+\usepackage{mathrsfs}   % math letterlike symbols
+\usepackage{stackengine}% circle around asteriks
+\usepackage{physics}    % math operators
+
+% Figure packages --------------------------------------------------------------
+
+\usepackage[dvipsnames]{xcolor}    % font colouring functionality
+\usepackage{graphicx}              % handling of images
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}              % improved tables
+\usepackage{array}                 % setting rowheight
+\usepackage{tikz}                  % drawing vector graphics
+\usepackage{circuitikz}            % drawing circuits
+\usepackage{algorithm}             % algorithm floats
+\usepackage[noend]{algpseudocode}  % pseudocode listings
+\usepackage{listings}              % source code listings
+\usepackage{enumitem}              % naming list items
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{wrapfig}
+
+% Styling packages -------------------------------------------------------------
+
+\usepackage{microtype}             % improve full justification and font kerning
+\usepackage{emptypage}             % suppress page numbering on empty pages
+\usepackage{fancyhdr}              % easy customisation of headers and footers
+\usepackage{titlesec}              % easy customisation of section titles
+\usepackage[margin=3cm]{geometry}  % adjust page margins
+\usepackage[toc,page]{appendix}    % improved appendix control
+\usepackage{framed}                % environments package
+\usepackage[framed,amsmath,thmmarks]{ntheorem} % environments package
+\usepackage{icomma}
+
+% Font packages ----------------------------------------------------------------
+% With pdflatex, fonts are limited to those provided in packages (as opposed to
+% xelatex or lualatex, which can use system fonts).  The typeface is changed by
+% simply importing the package for it.
+%
+% See
+% * http://www.tug.org/pracjourn/2006-1/hartke/hartke.pdf
+% * http://www.tug.dk/FontCatalogue/
+
+\usepackage{lmodern}  % improved default font
+\usepackage{pifont}
+
+%todo
+\usepackage[
+%  disable, %turn off todonotes
+  colorinlistoftodos, %enable a coloured square in the list of todos
+  textwidth=\marginparwidth, %set the width of the todonotes
+  textsize=scriptsize, %size of the text in the todonotes
+  ]{todonotes}
+% Customisations ---------------------------------------------------------------
+\mathtoolsset{showonlyrefs, showmanualtags} %removes equation numbering
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning,calc}
+\usetikzlibrary{intersections}
+\usetikzlibrary{shapes.misc}
+\tikzset{>={Latex[width=1mm,length=1.2mm]},
+  }   % arrow size in Tikz
+%\usetikzlibrary{external}
+%\tikzexternalize %activate!
+% \tikzset{external/force remake} % indkommentér for at lave tikz figurer på ny
+
+% Theorem enviroments
+\theoremheaderfont{\normalfont\bfseries}
+\theorembodyfont{\normalfont}
+\theoremstyle{break}
+\def\theoremframecommand{{\color{orange!80}\vrule width 5pt \hspace{5pt}}}
+\newshadedtheorem{example}{Example}[chapter]
+
+\def\theoremframecommand{{\color{blue!50}\vrule width 5pt \hspace{5pt}}}
+\newshadedtheorem{definition}{Definition}[chapter]
+
+\def\theoremframecommand{{\color{black!100}\vrule width 5pt \hspace{5pt}}}
+\newshadedtheorem{theorem}{Theorem}[chapter]
+
+\def\theoremframecommand{{\color{gray!100}\vrule width 5pt \hspace{5pt}}}
+\newshadedtheorem{proof}{Proof}[chapter]
+
+% Sets
+\newcommand{\N}{\mathbb{N}}  % natural numbers
+\newcommand{\Z}{\mathbb{Z}}  % integers
+\newcommand{\Q}{\mathbb{Q}}  % rational numbers
+\newcommand{\R}{\mathbb{R}}  % real numbers
+\newcommand{\C}{\mathbb{C}}  % complex numbers
+\newcommand{\I}{\mathbb{I}}  % imaginary numbers
+\renewcommand{\L}{\mathcal{L}}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\B}{\mathcal{B}}
+
+% Semantics
+\let\times=\cdot
+\newcommand{\euler}{e}%\mathfrak{e}}
+\renewcommand{\exp}[1]{\euler^{#1}}
+\newcommand{\amatrix}[2]{\left[\begin{array}{@{}*{#1}{c}|c@{}}#2\end{array}\right]}
+\newcommand{\transpose}{^\intercal}
+\newcommand{\directsum}{\oplus}
+\newcommand{\cardinality}[1]{\mathit{card}\bigl({#1}\bigr)}
+\newcommand\oast{\stackMath\mathbin{\stackinset{c}{0ex}{c}{0ex}{\ast}{\bigcirc}}}
+
+% Other operators and concepts
+\renewcommand\qedsymbol{$\blacksquare$}                                     % use black square as QED
+\DeclarePairedDelimiterXPP{\laplace}[1]{\mathscr{L}}{\{}{\}}{}{#1}          % Laplace transform
+\DeclarePairedDelimiterXPP{\invlaplace}[1]{\mathscr{L}^{-1}}{\{}{\}}{}{#1}  % Inverse laplace transform
+\DeclarePairedDelimiterXPP{\fourier}[1]{\mathscr{F}}{\{}{\}}{}{#1}          % Fourier transform
+\DeclarePairedDelimiterXPP{\invfourier}[1]{\mathscr{F}^{-1}}{\{}{\}}{}{#1}  % Inverse fourier transform
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+
+
+% Colours
+\definecolor{aaublue}{RGB}{33,26,82}
+\definecolor{verynice}{RGB}{106,126,37}
+\definecolor{wind}{RGB}{20,80,135}
+
+
+% Headers and footers
+\fancyhead{}                      % clear default header fields
+\fancyhead[RO]{\projectgroup}  % left on even, right on odd
+\fancyhead[RE]{\leftmark}         % chapter name
+\fancyhead[LO]{\rightmark}        % sections name
+\fancyfoot{}                      % clear default footer fields
+\fancyfoot[CE,CO]{\thepage}       % centered page numbers
+\pagestyle{fancy}                 % activate fancy style
+% \setlength{\headheight}{13.6pt}
+% Chapter titles
+% http://mirrors.dotsrc.org/ctan/macros/latex/contrib/titlesec/titlesec.pdf
+\titleformat
+{\chapter}
+[hang]
+{\Huge\bfseries}
+{\thechapter\enspace\textcolor{aaublue}{|}\enspace}
+{0pt}
+{\Huge\bfseries}
+
+% Predefined TikZ node styles
+\tikzstyle{point} = [fill,shape=circle,minimum size=3pt,inner sep=0pt]
+\tikzstyle{edge} = [fill=white,midway,inner sep=1pt]
+% Listing style
+\lstdefinestyle{custompy}{
+  belowcaptionskip=\baselineskip,
+  breaklines=true,
+  language=Python,
+  showstringspaces=false,
+  basicstyle=\small\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+\lstset{language=Python,style=custompy,captionpos=b}
+\pgfplotsset{compat=1.15}
