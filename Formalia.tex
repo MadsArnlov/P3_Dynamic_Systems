@@ -3,6 +3,7 @@
 \end{center}
 \section{General}
 \begin{itemize}
+    \item All chapters have an introduction section.
     \item Citations are noted at the start of a chapter, and are always placed after a period.
     \item Citations in environments are located at the bottom right corner, achieved by \texttt{\backslash hfill\backslash qedsymbol} in a new paragraph.
     \item All definitions and theorems have titles, but proofs and examples do not.
@@ -13,14 +14,14 @@
 \section{Python}
 Code is written in accordance to~\texttt{pep8} also called \texttt{pycodestyle 2.5.0}.
 
-Plots
+Plots generated in Python follow these criteria:
 \begin{itemize}
-    \item Figure size for one plot: \hfill\texttt{plt.figure(figsize=(16, 9))}
-    \item Figure size for subplots: \hfill\texttt{plt.figure(figsize=(16, 12))}
-    \item Axes are labeled and use fontsize~14: \hfill\texttt{plt.xlabel("x-axis [UNIT]", fontsize=14)}
+    \item Figure size for one plot: \hfill\texttt{plt.figure(figsize=(16, 9))}.
+    \item For subplots one row is used with \(x\) rows where each row requires a height of 4: For a plot with 3 subplots the code snippet is \hfill\texttt{plt.figure(figsize=(16, 12))}.
+    \item Axes are labeled and use fontsize~14: \hfill\texttt{plt.xlabel("x-axis [UNIT]", fontsize=14)}.
     \item Legend is used when one or two graphs are plotted in one plot.
     \item No title.
-    \item No grid, unless it serves specific purpose.
+    \item No grid, unless it serves a specific purpose.
     \item The standard colours for data is blue and red. Processed data is black.
-    \item For data the plot style is pixels: \hfill\texttt{plt.plot(x, y, 'b,')}
+    \item For data the plot style is pixels: \hfill\texttt{plt.plot(x, y, 'b,')}.
 \end{itemize}
