@@ -7,8 +7,8 @@ Created on Wed Nov  6 09:04:13 2019
 
 import numpy as np
 import matplotlib.pyplot as plt
-from plotting import plot
-
+#from plotting import plot
+from scipy.signal import savgol_filter
 """
 data = np.array([[1,0],
                  [1,2],
@@ -52,10 +52,10 @@ def midlingsfilter(x):
 
 
 file = np.loadtxt("data1_2019.txt", delimiter=",")
-file = file[:13000]
+file = file[:16000]
 
 m, g, l_p = 0.175, 9.82, 0.282
-k = m*g*l_p
+c = m*g*l_p
 M = np.zeros(60)
 
 samplingtime = 0.005
@@ -74,9 +74,12 @@ for k in range(len(file)-1):
 for i in range(len(dtw)):
     dtw[i] = midlingsfilter(dtw[i])
 
+w = savgol_filter(w,151,3)
+dtw = savgol_filter(dtw,151,3)
+
 A = np.array([file[:, 0], -np.sign(w), -w, -dtw])
 A = A.T
-b = k*np.sin(file[:, 1])
+b = c*np.sin(file[:, 1])
 Q, R = np.linalg.qr(A)
 b_hat = Q.T @ b
 x = np.linalg.solve(R, b_hat)
@@ -88,9 +91,9 @@ plt.figure(figsize=(16, 9))
 plt.subplot(3, 1, 1)
 plt.plot(file[:, 1])
 plt.subplot(3, 1, 2)
-plt.plot(np.arcsin((A @ x)/k))
+plt.plot(np.arcsin((A @ x)/c))
 plt.subplot(3, 1, 3)
-plt.plot(file[:, 1] - np.arcsin((A @ x)/k))
+plt.plot(file[:, 1] - np.arcsin((A @ x)/c))
 plt.show()
 
 print(max(file[:, 1] - np.arcsin((A @ x)/k)))
