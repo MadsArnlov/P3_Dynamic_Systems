@@ -89,8 +89,8 @@ orthogonal = [A[:, i] @ residual for i in range(4)]
 
 t = np.linspace(0, len(file)*samplingtime, len(file))
 
-plt.figure(figsize=(16, 9))
-plt.subplot(2, 1, 1)
+plt.figure(figsize=(16, 4.5))
+#plt.subplot(2, 1, 1)
 plt.plot(t, np.arcsin((A @ x)/c), 'orange', label="$i$")
 #plt.ylabel("Current [A]")
 #plt.subplot(2, 1, 2)
