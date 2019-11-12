@@ -74,8 +74,8 @@ for k in range(len(file)-1):
 for i in range(len(dtw)):
     dtw[i] = midlingsfilter(dtw[i])
 
-w = savgol_filter(w,151,3)
-dtw = savgol_filter(dtw,151,3)
+#w = savgol_filter(w, 151, 3)
+#dtw = savgol_filter(dtw, 151, 3)
 
 A = np.array([file[:, 0], -np.sign(w), -w, -dtw])
 A = A.T
@@ -88,12 +88,9 @@ residual = b - (A @ x)
 orthogonal = [A[:, i] @ residual for i in range(4)]
 
 plt.figure(figsize=(16, 9))
-plt.subplot(3, 1, 1)
-plt.plot(file[:, 1])
-plt.subplot(3, 1, 2)
-plt.plot(np.arcsin((A @ x)/c))
-plt.subplot(3, 1, 3)
-plt.plot(file[:, 1] - np.arcsin((A @ x)/c))
+plt.subplot(2, 1, 1)
+plt.plot(file[:, 0], 'b,', label="$i$")
+plt.subplot(2, 1, 2)
+plt.plot(file[:, 1], 'b-', label="$\theta$")#np.arcsin((A @ x)/c)
+#plt.savefig("Data_graph.pdf")
 plt.show()
-
-print(max(file[:, 1] - np.arcsin((A @ x)/k)))
