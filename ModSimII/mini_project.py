@@ -58,7 +58,7 @@ m, g, l_p = 0.175, 9.82, 0.282
 c = m*g*l_p
 M = np.zeros(60)
 
-samplingtime = 0.005
+samplingtime = 0.00667
 w = np.zeros(len(file))
 dtw = np.zeros_like(w)
 
@@ -91,11 +91,11 @@ t = np.linspace(0, len(file)*samplingtime, len(file))
 
 plt.figure(figsize=(16, 9))
 plt.subplot(2, 1, 1)
-plt.plot(t, file[:, 0], 'b,', label="$i$")
-plt.ylabel("Current [A]")
-plt.subplot(2, 1, 2)
-plt.plot(t, file[:, 1], 'b-', label="$\theta$")#np.arcsin((A @ x)/c)
+plt.plot(t, np.arcsin((A @ x)/c), 'orange', label="$i$")
+#plt.ylabel("Current [A]")
+#plt.subplot(2, 1, 2)
+#plt.plot(t, file[:, 1], 'b-', label="$\theta$")#np.arcsin((A @ x)/c)
 plt.ylabel("Angle [radians]")
 plt.xlabel("Time [s]")
-plt.savefig("Data_graph.pdf")
+plt.savefig("simulated_model.pdf")
 plt.show()
