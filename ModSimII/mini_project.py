@@ -87,10 +87,15 @@ Km, f, alpha, J = x
 residual = b - (A @ x)
 orthogonal = [A[:, i] @ residual for i in range(4)]
 
+t = np.linspace(0, len(file)*samplingtime, len(file))
+
 plt.figure(figsize=(16, 9))
 plt.subplot(2, 1, 1)
-plt.plot(file[:, 0], 'b,', label="$i$")
+plt.plot(t, file[:, 0], 'b,', label="$i$")
+plt.ylabel("Current [A]")
 plt.subplot(2, 1, 2)
-plt.plot(file[:, 1], 'b-', label="$\theta$")#np.arcsin((A @ x)/c)
-#plt.savefig("Data_graph.pdf")
+plt.plot(t, file[:, 1], 'b-', label="$\theta$")#np.arcsin((A @ x)/c)
+plt.ylabel("Angle [radians]")
+plt.xlabel("Time [s]")
+plt.savefig("Data_graph.pdf")
 plt.show()
