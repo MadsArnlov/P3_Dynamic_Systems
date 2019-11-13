@@ -54,7 +54,7 @@ def midlingsfilter(x):
 file = np.loadtxt("data1_2019.txt", delimiter=",")
 file = file[:13490]
 
-m, g, l_p = 0.175, 9.82, 0.282
+m, g, l_p = 0.225, 9.82, 0.282
 c = m*g*l_p
 M = np.zeros(60)
 
@@ -89,14 +89,16 @@ orthogonal = [A[:, i] @ residual for i in range(4)]
 
 t = np.linspace(0, len(file)*samplingtime, len(file))
 
+x_hat = np.array([0.0934, f, alpha, J])
+
 plt.figure(figsize=(16, 4.5))
 #plt.subplot(2, 1, 1)
 plt.plot(t, file[:, 1], 'b-', label="Measured")#np.arcsin((A @ x)/c)
 #plt.ylabel("Current [A]", fontsize=14)
 #plt.subplot(2, 1, 2)
-plt.plot(t, np.arcsin((A @ x)/c), 'orange', label="Simulated")
+plt.plot(t, np.arcsin((A @ x_hat)/c), 'orange', label="Simulated")
 plt.ylabel("Angle [radians]", fontsize=14)
 plt.xlabel("Time [s]", fontsize=14)
 plt.legend()
-plt.savefig("comparison_graph.pdf")
+#plt.savefig("comparison_graph.pdf")
 plt.show()
