@@ -16,9 +16,10 @@ from matplotlib import pyplot as plt
 #Physical values
 M           = 5 #Mass of cart
 m           = 0.251 #Mass of pendulum
-l           = 0.334 #Lenght of pendulum arm
-k           = 0.003 #Friction coefficient
-g           = 9.82 #Acceleration due to gravity
+l             = 0.334 #Lenght of pendulum arm
+k            = 0.003 #Friction coefficient
+g            = 9.82 #Acceleration due to gravity
+displ      = 0 #x-position to stabilise system
 
 #Inital values
 x_0         = 0 #Start postion of cart
@@ -76,7 +77,7 @@ K = signal.place_poles(A,B,np.array(P)).gain_matrix
 
 #Function definition describing the system
 def fun(t, z):
-    z_dot = (A - B @ K) @ z
+    z_dot = (A - B @ K) @ (z-np.array([displ,0,0,0]))
     return z_dot
     
 t = 0.0
@@ -135,7 +136,7 @@ for i in range(len(x_vars)):
     plt.axhline(y=0, color="r")
     plt.axvline(x=0, color ="r")
     plt.grid()
-
+plt.show()
 
 
 
