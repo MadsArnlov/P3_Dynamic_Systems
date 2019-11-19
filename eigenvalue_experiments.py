@@ -134,8 +134,11 @@ pend_vel = X4 #Pendulum velocities
 # Eigenvalues
 P = [
      [-1, -2, -3, -4],
-     [-2, -3, -5, -10],
-     [-20, -23, -50, -100]
+     [-4, -5, -6, -7],
+     [-8, -9, -10, -11], #Umildbart den bedste
+     [-12, -13, -15, -16],
+     [-17, -18, -19, -20],
+     [-21, -22, -23, -24]
      ]
 
 plotfig(P, t_arr, cart_pos)
