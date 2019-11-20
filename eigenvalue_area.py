@@ -7,7 +7,7 @@ Authors: MATTEK 4.211
 import numpy as np
 from scipy import signal
 from matplotlib import pyplot as plt
-
+import random
 
 # =============================================================================
 # Constants
@@ -109,15 +109,40 @@ P = [
      [-25, -26, -27, -28]
      ]
 
-for i in P:
-    K = signal.place_poles(A,B,np.array(i)).gain_matrix
-    runrk4(K)
-    S = 0
-    print(i)
-    for j in cart_pos:
-        if j < 0:
-            j = j**2
-        S += abs(j)*t_step
-    print(S)
+#for i in P:
+#    K = signal.place_poles(A,B,np.array(i)).gain_matrix
+#    runrk4(K)
+#    S = 0
+#    print(i)
+#    for j in cart_pos:
+#        if j < 0:
+#            j = j**2
+#        S += abs(j)*t_step
+#    print(S)
 
+def random_eigenvalues(e_start,e_stop,iterations):
+    eigenvalue_set=np.zeros(4)
+    eigenvalue_list=[]
+    for i in range(iterations-1):
+        eigenvalue_set=np.zeros(4)
+        for k in range(4):
+            eigenvalue_set[k]=random.uniform(e_start,e_stop)
+        eigenvalue_list.append(eigenvalue_set)
+    return eigenvalue_list
 
+def optimize_eigenvalues(e_start,e_stop,iterations):
+    P_random = random_eigenvalues(e_start,e_stop,iterations)
+    S_list=[]
+    for i in P_random:
+        K = signal.place_poles(A,B,np.array(i)).gain_matrix
+        runrk4(K)
+        S = 0
+#        print(i)
+        for j in cart_pos:
+            S+=abs(j)*t_step
+        S_list.append(S)
+#        print(S)
+#    print(P_random[S_list.index(min(S_list))])
+    print("the best option is {:g}".format(S_list.index(min(S_list))))
+    print("the best eigenvalues are", P_random[S_list.index(min(S_list))])
+    return P_random[S_list.index(min(S_list))]
