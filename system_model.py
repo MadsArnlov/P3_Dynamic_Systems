@@ -33,8 +33,8 @@ t_stop      = 10 #End time
 N           = 50000 #Number of steps
 
 #Stabilisation parameters
-P           = [-8,-9,-10,-11] #Eigenvalues used for stabilisation
-P           = [-0.97592931, -0.74017246, -0.88919959, -0.69022008]
+P           = [-1,-2,-3,-4] #Eigenvalues used for stabilisation
+#P           = [-0.97592931, -0.74017246, -0.88919959, -0.69022008]
 
 # =============================================================================
 # RK4 Implementation
@@ -98,11 +98,12 @@ cart_vel = X3 #Cart velocities
 pend_vel = X4 #Pendulum velocities
 
 #The variables to put on each axis
-x_vars = [t_arr]
-y_vars = [cart_pos]
+x_vars = [t_arr, t_arr]
+y_vars = [cart_pos, cart_vel]
 
-plt.figure(figsize=(30, 15))
+plt.figure(figsize=(16, 4*len(y_vars)))
 for i in range(len(x_vars)):
+    
     nr_plots = len(x_vars)
     x_var = x_vars[i]
     y_var = y_vars[i]
@@ -135,8 +136,13 @@ for i in range(len(x_vars)):
     plt.plot(x_var, y_var)
     plt.axhline(y=0, color="r")
     plt.axvline(x=0, color ="r")
+    
+    if i < 1:
+        plt.title("$\lambda$ = {}".format(P), fontsize="xx-large")
+    
     plt.grid()
 plt.show()
+#plt.savefig("$\lambda$ = {}.png".format(P))
 
 
 
