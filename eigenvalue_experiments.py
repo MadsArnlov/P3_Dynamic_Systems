@@ -17,8 +17,9 @@ from matplotlib import pyplot as plt
 M           = 5 #Mass of cart
 m           = 0.251 #Mass of pendulum
 l             = 0.334 #Lenght of pendulum arm
-k            = 0.003 #Friction coefficient
 g            = 9.82 #Acceleration due to gravity
+mu          = 0.32 #Friction Coefficient
+F_c         = -g*mu #Coloumb Force
 displ      = 0 #x-position to stabilise system
 
 #Inital values
@@ -87,7 +88,7 @@ def runrk4(K):
 # Plotting setup
 # =============================================================================
 
-A = np.array([[0,0,1,0],[0,0,0,1],[0,m*g/M,k/M,0],[0,g*(m+M)/(l*M),k/(l*M),0]])
+A = np.array([[0,0,1,0],[0,0,0,1],[0,m*g/M,F_c/M,0],[0,g*(m+M)/(l*M),F_c/(l*M),0]])
 B = np.array([[0,0,-1/M,-1/(l*M)]]).T
 name = []
 x_label = ""

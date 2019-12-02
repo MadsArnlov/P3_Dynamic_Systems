@@ -16,10 +16,11 @@ from matplotlib import pyplot as plt
 #Physical values
 M           = 5 #Mass of cart
 m           = 0.251 #Mass of pendulum
-l             = 0.334 #Lenght of pendulum arm
-k            = 0.003 #Friction coefficient
-g            = 9.82 #Acceleration due to gravity
-displ      = 0 #x-position to stabilise system
+l           = 0.334 #Lenght of pendulum arm
+g           = 9.82 #Acceleration due to gravity
+mu          = 0.32 #Friction Coefficient
+F_c         = -g*mu #Coloumb Force
+displ       = 0 #x-position to stabilise system
 
 #Inital values
 x_0         = 0 #Start postion of cart
@@ -69,7 +70,7 @@ X4[0] = theta_dot_0
 # =============================================================================
 
 #Defining the matricies of the system
-A = np.array([[0,0,1,0],[0,0,0,1],[0,m*g/M,k/M,0],[0,g*(m+M)/(l*M),k/(l*M),0]])
+A = np.array([[0,0,1,0],[0,0,0,1],[0,m*g/M,F_c/M,0],[0,g*(m+M)/(l*M),F_c/(l*M),0]])
 B = np.array([[0,0,-1/M,-1/(l*M)]]).T
 
 #Calculating the gain matrix
