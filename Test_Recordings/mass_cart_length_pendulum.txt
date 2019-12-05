@@ -1,0 +1,4 @@
+Experiment parameters
+m_c = 6.28
+l_p = 0.3235
+mu = 0.052
