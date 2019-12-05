@@ -17,13 +17,14 @@ from matplotlib import pyplot as plt
 M           = 5 #Mass of cart
 m           = 0.251 #Mass of pendulum
 l             = 0.334 #Lenght of pendulum arm
-k            = 0.003 #Friction coefficient
 g            = 9.82 #Acceleration due to gravity
+mu          = 0.32 #Friction Coefficient
+F_c         = -g*mu #Coloumb Force
 displ      = 0 #x-position to stabilise system
 
 #Inital values
 x_0         = 0 #Start postion of cart
-theta_0     = np.pi/3 #Start angle of pendulum
+theta_0     = np.pi/6 #Start angle of pendulum
 x_dot_0     = 0 #Start velocity of cart
 theta_dot_0 = 0 #Start angular velocity of pendulum
 
@@ -87,12 +88,12 @@ def runrk4(K):
 # Plotting setup
 # =============================================================================
 
-A = np.array([[0,0,1,0],[0,0,0,1],[0,m*g/M,k/M,0],[0,g*(m+M)/(l*M),k/(l*M),0]])
+A = np.array([[0,0,1,0],[0,0,0,1],[0,m*g/M,F_c/M,0],[0,g*(m+M)/(l*M),F_c/(l*M),0]])
 B = np.array([[0,0,-1/M,-1/(l*M)]]).T
 name = []
 x_label = ""
 y_label = ""
-plt.figure(figsize=(20,10))
+plt.figure(figsize=(16,8))
 
 def plotfig(P, x_var, y_var):
     for i in P:
@@ -132,16 +133,24 @@ cart_vel = X3 #Cart velocities
 pend_vel = X4 #Pendulum velocities
 
 # Eigenvalues
-P = [
-     [-1, -2, -3, -4],
-     [-4, -5, -6, -7],
-     [-8, -9, -10, -11], #Umildbart den bedste
-     [-12, -13, -15, -16],
-     [-17, -18, -19, -20],
-     [-21, -22, -23, -24]
-     ]
-
+P = [[-1,-2,-3,-4]]
+# =============================================================================
+# P = [[-1,-2,-3,-1300],
+#      [-2,-4,-3,-1300]]
+# =============================================================================
+# =============================================================================
+# P = [
+#      [-1, -2, -3, -4],
+#      [-4, -5, -6, -7],
+#      [-8, -9, -10, -11], #Umildbart den bedste
+#      [-12, -13, -15, -16],
+#      [-17, -18, -19, -20],
+#      [-21, -22, -23, -24]
+#      ]
+# 
+# =============================================================================
 plotfig(P, t_arr, cart_pos)
+#plt.axis([0,11,-10,0])
 plt.axhline(y=0, color="r")
 plt.axvline(x=0, color="r")
 plt.legend(name, fontsize="xx-large")
