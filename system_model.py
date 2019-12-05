@@ -34,10 +34,11 @@ t_stop      = 10 #End time
 N           = 50000 #Number of steps
 
 #Stabilisation parameters
-s = 0
-v = 1
-P           = [-5*v-s,-12*v-s,-13*v-s,-14*v-s] #Eigenvalues used for stabilisation
-#P           = [-0.97592931, -0.74017246, -0.88919959, -0.69022008]
+p = 0 #Push
+s = 1 #Scale
+P           = [-3*s-p,-4*s-p,-5*s-p,-6*s-p] #Eigenvalues used for stabilisation
+#P          = [-3*s-p,-5*s-p,-7*s-p,-9*s-p]
+#P          = [-3*s-p,-6*s-p,-9*s-p,-12*s-p]
 
 # =============================================================================
 # RK4 Implementation

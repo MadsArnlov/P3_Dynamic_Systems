@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Dec  5 11:01:24 2019
+
+@author: Andreas
+"""
+
 """
 Created for P3-Project -- Aalborg University
 
@@ -20,17 +27,17 @@ l           = 0.3235 #Lenght of pendulum arm
 g           = 9.82 #Acceleration due to gravity
 mu          = 0.052 #Friction Coefficient
 F_c         = -(g*M)*mu #Coloumb Force
-displ       = 0.4 #x-position to stabilise system
+displ       = 0.445 #x-position to stabilise system
 
 #Inital values
-x_0         = 0 #Start postion of cart
-theta_0     = 0.1483 #Start angle of pendulum
+x_0         = 0.445 #Start postion of cart
+theta_0     = 0.14765 #Start angle of pendulum
 x_dot_0     = 0 #Start velocity of cart
 theta_dot_0 = 0 #Start angular velocity of pendulum
 
 #RK4 parameters
 t_start     = 0.0 #Start time
-t_stop      = 10 #End time
+t_stop      = 5 #End time
 N           = 5000 #Number of steps
 
 
@@ -91,40 +98,28 @@ def runrk4(K):
 A = np.array([[0,0,1,0],[0,0,0,1],[0,m*g/M,F_c/M,0],[0,g*(m+M)/(l*M),F_c/(l*M),0]])
 B = np.array([[0,0,-1/M,-1/(l*M)]]).T
 name = []
-x_label = ""
-y_label = ""
-plt.figure(figsize=(16,8))
+plt.figure(figsize=(16,12))
 
-def plotfig(P, x_var, y_var):
+def plotfig(P):
     for i in P:
         name.append(i)
         K = signal.place_poles(A,B,np.array(i)).gain_matrix
         runrk4(K)
-        plt.plot(x_var, y_var)
-        global x_label
-        global y_label
-    
-    if np.array_equal(x_var, t_arr):
-        x_label = "Time [s]"
-    elif np.array_equal(x_var, cart_pos):
-        x_label = "Position [m]"
-    elif np.array_equal(x_var, pend_ang):
-        x_label = "Angle [rad]"
-    elif np.array_equal(x_var, cart_vel):
-        x_label = "Velocity [m/s]"
-    elif np.array_equal(x_var, pend_vel):
-        x_label = "Angular Velocity [rads/s]"
-    
-    if np.array_equal(y_var, t_arr):
-        y_label = "Time [s]"
-    elif np.array_equal(y_var, cart_pos):
-        y_label = "Position [m]"
-    elif np.array_equal(y_var, pend_ang):
-        y_label = "Angle [rads]"
-    elif np.array_equal(y_var, cart_vel):
-        y_label = "Velocity [m/s]"
-    elif np.array_equal(y_var, pend_vel):
-        y_label = "Angular Velocity [rads/s]"
+        plt.subplot(2,1,1)
+        plt.xlabel("Time [s]", fontsize=14)
+        plt.ylabel("Position [m]", fontsize=14)
+        plt.plot(t_arr, cart_pos)
+        plt.ylim(0,0.9) #Position
+        plt.tick_params(labelsize = "xx-large")
+        plt.legend(name, fontsize="xx-large", loc="upper right")
+        plt.xlim(0,5)
+        plt.subplot(2,1,2)
+        plt.xlabel("Time [s]", fontsize=14)
+        plt.ylabel("Angle [rad]", fontsize=14)
+        plt.plot(t_arr, pend_ang)
+        plt.ylim(-0.15,0.15) #Angle
+        plt.tick_params(labelsize = "xx-large")
+        plt.legend(name, fontsize="xx-large", loc="upper right")
     
 
 cart_pos = X1 #Cart positions
@@ -148,29 +143,15 @@ for i in range(0,4):
     P3p.append([-3*s-p,-6*s-p,-9*s-p,-12*s-p])
     
 for j in range(0,4):
-    p = i
+    p = 0
     P1s.append([-3*s-p,-4*s-p,-5*s-p,-6*s-p])
     P2s.append([-3*s-p,-5*s-p,-7*s-p,-9*s-p])
     P3s.append([-3*s-p,-6*s-p,-9*s-p,-12*s-p])
     s += 0.5
 
 # Eigenvalues
-P = P1s
-print("Eigenvalues:")
-for eigen in P:
-    print(eigen)
-
-#plotfig(P, t_arr, cart_pos)
-plotfig(P, t_arr, pend_ang)
-plt.axhline(y=0, color="r")
-plt.axvline(x=0, color="r")
-plt.legend(name, fontsize="xx-large")
-plt.xlabel(x_label, fontsize = "xx-large")
-plt.ylabel(y_label, fontsize = "xx-large")
-plt.tick_params(labelsize = "xx-large")
-#plt.ylim(-0.445,0.445) #Position
-plt.ylim(-0.15,0.15) #Angle
-plt.savefig("Figures_of_models/Model_Ref3_Ang_Scale.pdf")
+plotfig(P3s)
+#plt.savefig("Figures_of_models/Model_Ref3_Scale.png")
 
 
 
