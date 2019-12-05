@@ -110,16 +110,18 @@ def plotfig(P):
         plt.ylabel("Position [m]", fontsize=14)
         plt.plot(t_arr, cart_pos)
         plt.ylim(0,0.9) #Position
-        plt.tick_params(labelsize = "xx-large")
-        plt.legend(name, fontsize="xx-large", loc="upper right")
         plt.xlim(0,5)
+#        plt.tick_params(labelsize = "xx-large")
+        plt.legend(name, loc="upper right")
+        plt.xlim(left=0)
         plt.subplot(2,1,2)
         plt.xlabel("Time [s]", fontsize=14)
         plt.ylabel("Angle [rad]", fontsize=14)
         plt.plot(t_arr, pend_ang)
         plt.ylim(-0.15,0.15) #Angle
-        plt.tick_params(labelsize = "xx-large")
-        plt.legend(name, fontsize="xx-large", loc="upper right")
+        plt.xlim(0,5)
+#        plt.tick_params(labelsize = "xx-large")
+        plt.legend(name, loc="upper right")
     
 
 cart_pos = X1 #Cart positions
@@ -150,8 +152,8 @@ for j in range(0,4):
     s += 0.5
 
 # Eigenvalues
-plotfig(P3s)
-#plt.savefig("Figures_of_models/Model_Ref3_Scale.png")
+plotfig(P3p)
+plt.savefig("Figures_of_models/Model_Ref3_Push.png")
 
 
 
