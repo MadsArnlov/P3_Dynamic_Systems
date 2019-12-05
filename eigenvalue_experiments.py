@@ -14,11 +14,11 @@ from matplotlib import pyplot as plt
 # =============================================================================
 
 #Physical values
-M           = 5 #Mass of cart
-m           = 0.251 #Mass of pendulum
+M           = 5.273 #Mass of cart
+m           = 0.250 #Mass of pendulum
 l             = 0.334 #Lenght of pendulum arm
-g            = 9.82 #Acceleration due to gravity
-mu          = 0.32 #Friction Coefficient
+g            = -9.82 #Acceleration due to gravity
+mu          = 0.052 #Friction Coefficient
 F_c         = -g*mu #Coloumb Force
 displ      = 0 #x-position to stabilise system
 
@@ -99,6 +99,7 @@ def plotfig(P, x_var, y_var):
     for i in P:
         name.append(i)
         K = signal.place_poles(A,B,np.array(i)).gain_matrix
+        print(K)
         runrk4(K)
         plt.plot(x_var, y_var)
         global x_label
@@ -133,7 +134,7 @@ cart_vel = X3 #Cart velocities
 pend_vel = X4 #Pendulum velocities
 
 # Eigenvalues
-P = [[-1,-2,-3,-4]]
+P = [[-4,-5,-6,-7]]
 # =============================================================================
 # P = [[-1,-2,-3,-1300],
 #      [-2,-4,-3,-1300]]

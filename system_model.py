@@ -14,17 +14,17 @@ from matplotlib import pyplot as plt
 # =============================================================================
 
 #Physical values
-M           = 5 #Mass of cart
-m           = 0.251 #Mass of pendulum
-l           = 0.334 #Lenght of pendulum arm
+M           = 6.28 #Mass of cart
+m           = 0.200 #Mass of pendulum
+l           = 0.3235 #Lenght of pendulum arm
 g           = 9.82 #Acceleration due to gravity
-mu          = 0.32 #Friction Coefficient
-F_c         = -g*mu #Coloumb Force
+mu          = 0.052 #Friction Coefficient
+F_c         = -(g*M)*mu #Coloumb Force
 displ       = 0 #x-position to stabilise system
 
 #Inital values
 x_0         = 0 #Start postion of cart
-theta_0     = np.pi/3 #Start angle of pendulum
+theta_0     = 0.23 #Start angle of pendulum
 x_dot_0     = 0 #Start velocity of cart
 theta_dot_0 = 0 #Start angular velocity of pendulum
 
@@ -34,7 +34,9 @@ t_stop      = 10 #End time
 N           = 50000 #Number of steps
 
 #Stabilisation parameters
-P           = [-1,-2,-3,-4] #Eigenvalues used for stabilisation
+s = 0
+v = 1
+P           = [-5*v-s,-12*v-s,-13*v-s,-14*v-s] #Eigenvalues used for stabilisation
 #P           = [-0.97592931, -0.74017246, -0.88919959, -0.69022008]
 
 # =============================================================================
@@ -75,6 +77,8 @@ B = np.array([[0,0,-1/M,-1/(l*M)]]).T
 
 #Calculating the gain matrix
 K = signal.place_poles(A,B,np.array(P)).gain_matrix
+print("Lambda =",P)
+print("K = (",K[0][0], ",", K[0][1], ",", K[0][2], ",", K[0][3], ")")
 
 #Function definition describing the system
 def fun(t, z):
@@ -100,49 +104,51 @@ pend_vel = X4 #Pendulum velocities
 
 #The variables to put on each axis
 x_vars = [t_arr, t_arr]
-y_vars = [cart_pos, cart_vel]
-
-plt.figure(figsize=(16, 4*len(y_vars)))
-for i in range(len(x_vars)):
-    
-    nr_plots = len(x_vars)
-    x_var = x_vars[i]
-    y_var = y_vars[i]
-    x_label = ""
-    y_label = ""
-    
-    if np.array_equal(x_var, t_arr):
-        x_label = "Time [s]"
-    elif np.array_equal(x_var, cart_pos):
-        x_label = "Position [m]"
-    elif np.array_equal(x_var, pend_ang):
-        x_label = "Angle [rads]"
-    elif np.array_equal(x_var, cart_vel):
-        x_label = "Velocity [m/s]"
-    elif np.array_equal(x_var, pend_vel):
-        x_label = "Angular Velocity [rads/s]"
-    
-    if np.array_equal(y_var, t_arr):
-        y_label = "Time [s]"
-    elif np.array_equal(y_var, cart_pos):
-        y_label = "Position [m]"
-    elif np.array_equal(y_var, pend_ang):
-        y_label = "Angle [rads]"
-    elif np.array_equal(y_var, cart_vel):
-        y_label = "Velocity [m/s]"
-    elif np.array_equal(y_var, pend_vel):
-        y_label = "Angular Velocity [rads/s]"
-
-    plt.subplot(nr_plots, 1, i+1, xlabel=x_label, ylabel=y_label)
-    plt.plot(x_var, y_var)
-    plt.axhline(y=0, color="r")
-    plt.axvline(x=0, color ="r")
-    
-    if i < 1:
-        plt.title("$\lambda$ = {}".format(P), fontsize="xx-large")
-    
-    plt.grid()
-plt.show()
+y_vars = [cart_pos, pend_ang]
+# =============================================================================
+# 
+# plt.figure(figsize=(16, 4*len(y_vars)))
+# for i in range(len(x_vars)):
+#     
+#     nr_plots = len(x_vars)
+#     x_var = x_vars[i]
+#     y_var = y_vars[i]
+#     x_label = ""
+#     y_label = ""
+#     
+#     if np.array_equal(x_var, t_arr):
+#         x_label = "Time [s]"
+#     elif np.array_equal(x_var, cart_pos):
+#         x_label = "Position [m]"
+#     elif np.array_equal(x_var, pend_ang):
+#         x_label = "Angle [rads]"
+#     elif np.array_equal(x_var, cart_vel):
+#         x_label = "Velocity [m/s]"
+#     elif np.array_equal(x_var, pend_vel):
+#         x_label = "Angular Velocity [rads/s]"
+#     
+#     if np.array_equal(y_var, t_arr):
+#         y_label = "Time [s]"
+#     elif np.array_equal(y_var, cart_pos):
+#         y_label = "Position [m]"
+#     elif np.array_equal(y_var, pend_ang):
+#         y_label = "Angle [rads]"
+#     elif np.array_equal(y_var, cart_vel):
+#         y_label = "Velocity [m/s]"
+#     elif np.array_equal(y_var, pend_vel):
+#         y_label = "Angular Velocity [rads/s]"
+# 
+#     plt.subplot(nr_plots, 1, i+1, xlabel=x_label, ylabel=y_label)
+#     plt.plot(x_var, y_var)
+#     plt.axhline(y=0, color="r")
+#     plt.axvline(x=0, color ="r")
+#     
+#     if i < 1:
+#         plt.title("$\lambda$ = {}".format(P), fontsize="xx-large")
+#     
+#     plt.grid()
+# plt.show()
+# =============================================================================
 #plt.savefig("$\lambda$ = {}.png".format(P))
 
 
