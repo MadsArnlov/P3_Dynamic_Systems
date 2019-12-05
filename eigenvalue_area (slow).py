@@ -15,7 +15,7 @@ import numpy as np
 from scipy import signal
 from matplotlib import pyplot as plt
 import random
-
+import time
 # =============================================================================
 # Constants
 # =============================================================================
@@ -30,7 +30,7 @@ displ      = 0 #x-position to stabilise system
 
 #Inital values
 x_0         = 0 #Start postion of cart
-theta_0     = np.pi/3 #Start angle of pendulum
+theta_0     = np.pi/5 #Start angle of pendulum
 x_dot_0     = 0 #Start velocity of cart
 theta_dot_0 = 0 #Start angular velocity of pendulum
 
@@ -137,7 +137,8 @@ def random_eigenvalues(e_start,e_stop,iterations):
         eigenvalue_list.append(eigenvalue_set)
     return eigenvalue_list
 
-def optimize_eigenvalues(e_start,e_stop,iterations):
+def optimize_eigenvalues(e_start,e_stop,iterations,value=cart_pos):
+    start=time.time()
     P_random = random_eigenvalues(e_start,e_stop,iterations)
     S_list=[]
     for i in P_random:
@@ -145,11 +146,12 @@ def optimize_eigenvalues(e_start,e_stop,iterations):
         runrk4(K)
         S = 0
 #        print(i)
-        for j in cart_pos:
+        for j in value:
             S+=abs(j)*t_step
         S_list.append(S)
 #        print(S)
 #    print(P_random[S_list.index(min(S_list))])
     print("the best option is {:g}".format(S_list.index(min(S_list))))
     print("the best eigenvalues are", P_random[S_list.index(min(S_list))])
+    print(time.time()-start)
     return P_random[S_list.index(min(S_list))]

@@ -5,9 +5,10 @@ Authors: MATTEK 4.211
 """
 
 import numpy as np
-from scipy import signal
+from scipy import signal, integrate
 from matplotlib import pyplot as plt
 import random
+import time
 
 # =============================================================================
 # Constants
@@ -18,19 +19,20 @@ M           = 5 #Mass of cart
 m           = 0.251 #Mass of pendulum
 l             = 0.334 #Lenght of pendulum arm
 k            = 0.003 #Friction coefficient
+k_2          = 3.2 #kinetic friction coefficient
 g            = 9.82 #Acceleration due to gravity
 displ      = 0 #x-position to stabilise system
 
 #Inital values
 x_0         = 0 #Start postion of cart
-theta_0     = np.pi/3 #Start angle of pendulum
+theta_0     = np.pi/5 #Start angle of pendulum
 x_dot_0     = 0 #Start velocity of cart
 theta_dot_0 = 0 #Start angular velocity of pendulum
 
 #RK4 parameters
 t_start     = 0.0 #Start time
-t_stop      = 10 #End time
-N           = 5000 #Number of steps
+t_stop      = 30 #End time
+N           = 1000 #Number of steps
 
 
 # =============================================================================
@@ -130,19 +132,53 @@ def random_eigenvalues(e_start,e_stop,iterations):
         eigenvalue_list.append(eigenvalue_set)
     return eigenvalue_list
 
-def optimize_eigenvalues(e_start,e_stop,iterations):
+def optimize_eigenvalues(e_start,e_stop,iterations, variable=cart_pos):
+#    start=time.time()
     P_random = random_eigenvalues(e_start,e_stop,iterations)
+#    print(time.time()-start)
     S_list=[]
     for i in P_random:
         K = signal.place_poles(A,B,np.array(i)).gain_matrix
+#        start_append=time.time()
         runrk4(K)
-        S = 0
-#        print(i)
-        for j in cart_pos:
-            S+=abs(j)*t_step
+#        print(time.time()-start_append)
+        S=np.sum(np.abs(variable)*t_step)
         S_list.append(S)
-#        print(S)
+        
+#    print(time.time()-start)
 #    print(P_random[S_list.index(min(S_list))])
-    print("the best option is {:g}".format(S_list.index(min(S_list))))
+#    print("the best option is {:g}".format(S_list.index(min(S_list))))
     print("the best eigenvalues are", P_random[S_list.index(min(S_list))])
-    return P_random[S_list.index(min(S_list))]
+#    print("total time", time.time()-start)
+    return np.array(P_random[S_list.index(min(S_list))])
+
+def plotfig(P, x_var, y_var):
+    for i in P:
+        name.append(i)
+        K = signal.place_poles(A,B,np.array(i)).gain_matrix
+        runrk4(K)
+        plt.plot(x_var, y_var)
+        global x_label
+        global y_label
+    
+    if np.array_equal(x_var, t_arr):
+        x_label = "Time [s]"
+    elif np.array_equal(x_var, cart_pos):
+        x_label = "Position [m]"
+    elif np.array_equal(x_var, pend_ang):
+        x_label = "Angle [rads]"
+    elif np.array_equal(x_var, cart_vel):
+        x_label = "Velocity [m/s]"
+    elif np.array_equal(x_var, pend_vel):
+        x_label = "Angular Velocity [rads/s]"
+    
+    if np.array_equal(y_var, t_arr):
+        y_label = "Time [s]"
+    elif np.array_equal(y_var, cart_pos):
+        y_label = "Position [m]"
+    elif np.array_equal(y_var, pend_ang):
+        y_label = "Angle [rads]"
+    elif np.array_equal(y_var, cart_vel):
+        y_label = "Velocity [m/s]"
+    elif np.array_equal(y_var, pend_vel):
+        y_label = "Angular Velocity [rads/s]"
