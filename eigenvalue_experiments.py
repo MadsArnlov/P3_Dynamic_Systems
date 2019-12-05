@@ -14,17 +14,17 @@ from matplotlib import pyplot as plt
 # =============================================================================
 
 #Physical values
-M           = 5.273 #Mass of cart
-m           = 0.250 #Mass of pendulum
-l             = 0.334 #Lenght of pendulum arm
-g            = -9.82 #Acceleration due to gravity
+M           = 6.28 #Mass of cart
+m           = 0.200 #Mass of pendulum
+l             = 0.3235 #Lenght of pendulum arm
+g            = 9.82 #Acceleration due to gravity
 mu          = 0.052 #Friction Coefficient
-F_c         = -g*mu #Coloumb Force
+F_c         = -(g*M)*mu #Coloumb Force
 displ      = 0 #x-position to stabilise system
 
 #Inital values
 x_0         = 0 #Start postion of cart
-theta_0     = np.pi/6 #Start angle of pendulum
+theta_0     = 0.23 #Start angle of pendulum
 x_dot_0     = 0 #Start velocity of cart
 theta_dot_0 = 0 #Start angular velocity of pendulum
 
