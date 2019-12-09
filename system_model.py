@@ -35,7 +35,7 @@ N           = 50000 #Number of steps
 
 #Stabilisation parameters
 p = 0 #Push
-s = 1 #Scale
+s = 1.5 #Scale
 P           = [-3*s-p,-4*s-p,-5*s-p,-6*s-p] #Eigenvalues used for stabilisation
 #P          = [-3*s-p,-5*s-p,-7*s-p,-9*s-p]
 #P          = [-3*s-p,-6*s-p,-9*s-p,-12*s-p]
@@ -78,8 +78,8 @@ B = np.array([[0,0,-1/M,-1/(l*M)]]).T
 
 #Calculating the gain matrix
 K = signal.place_poles(A,B,np.array(P)).gain_matrix
-print("Lambda =",P)
-print("K = (",K[0][0], ",", K[0][1], ",", K[0][2], ",", K[0][3], ")")
+#print("Lambda =",P)
+#print("K = (",K[0][0], ",", K[0][1], ",", K[0][2], ",", K[0][3], ")")
 
 #Function definition describing the system
 def fun(t, z):
@@ -103,53 +103,64 @@ pend_ang = X2 #Pendulum angles
 cart_vel = X3 #Cart velocities
 pend_vel = X4 #Pendulum velocities
 
+# =============================================================================
+# #Calculating the input
+# current_arr = []
+# for i in range(len(cart_pos)):
+#     current = K @ [cart_pos[i], pend_ang[i], cart_vel[i], pend_vel[i]]
+#     current_arr.append((current[0]*0.028)/(0.0934))
+# current_arr = np.array(current_arr)
+# =============================================================================
+
 #The variables to put on each axis
 x_vars = [t_arr, t_arr]
 y_vars = [cart_pos, pend_ang]
-# =============================================================================
-# 
-# plt.figure(figsize=(16, 4*len(y_vars)))
-# for i in range(len(x_vars)):
-#     
-#     nr_plots = len(x_vars)
-#     x_var = x_vars[i]
-#     y_var = y_vars[i]
-#     x_label = ""
-#     y_label = ""
-#     
-#     if np.array_equal(x_var, t_arr):
-#         x_label = "Time [s]"
-#     elif np.array_equal(x_var, cart_pos):
-#         x_label = "Position [m]"
-#     elif np.array_equal(x_var, pend_ang):
-#         x_label = "Angle [rads]"
-#     elif np.array_equal(x_var, cart_vel):
-#         x_label = "Velocity [m/s]"
-#     elif np.array_equal(x_var, pend_vel):
-#         x_label = "Angular Velocity [rads/s]"
-#     
-#     if np.array_equal(y_var, t_arr):
-#         y_label = "Time [s]"
-#     elif np.array_equal(y_var, cart_pos):
-#         y_label = "Position [m]"
-#     elif np.array_equal(y_var, pend_ang):
-#         y_label = "Angle [rads]"
-#     elif np.array_equal(y_var, cart_vel):
-#         y_label = "Velocity [m/s]"
-#     elif np.array_equal(y_var, pend_vel):
-#         y_label = "Angular Velocity [rads/s]"
-# 
-#     plt.subplot(nr_plots, 1, i+1, xlabel=x_label, ylabel=y_label)
-#     plt.plot(x_var, y_var)
-#     plt.axhline(y=0, color="r")
-#     plt.axvline(x=0, color ="r")
-#     
-#     if i < 1:
-#         plt.title("$\lambda$ = {}".format(P), fontsize="xx-large")
-#     
-#     plt.grid()
-# plt.show()
-# =============================================================================
+
+plt.figure(figsize=(16, 4*len(y_vars)))
+for i in range(len(x_vars)):
+    
+    nr_plots = len(x_vars)
+    x_var = x_vars[i]
+    y_var = y_vars[i]
+    x_label = ""
+    y_label = ""
+    
+    if np.array_equal(x_var, t_arr):
+        x_label = "Time [s]"
+    elif np.array_equal(x_var, cart_pos):
+        x_label = "Position [m]"
+    elif np.array_equal(x_var, pend_ang):
+        x_label = "Angle [rads]"
+    elif np.array_equal(x_var, cart_vel):
+        x_label = "Velocity [m/s]"
+    elif np.array_equal(x_var, pend_vel):
+        x_label = "Angular Velocity [rads/s]"
+    elif np.array_equal(x_var, current_arr):
+        x_label = "Current [A]"
+    
+    if np.array_equal(y_var, t_arr):
+        y_label = "Time [s]"
+    elif np.array_equal(y_var, cart_pos):
+        y_label = "Position [m]"
+    elif np.array_equal(y_var, pend_ang):
+        y_label = "Angle [rads]"
+    elif np.array_equal(y_var, cart_vel):
+        y_label = "Velocity [m/s]"
+    elif np.array_equal(y_var, pend_vel):
+        y_label = "Angular Velocity [rads/s]"
+    elif np.array_equal(y_var, current_arr):
+        y_label = "Current [A]"
+
+    plt.subplot(nr_plots, 1, i+1, xlabel=x_label, ylabel=y_label)
+    plt.plot(x_var, y_var)
+    plt.axhline(y=0, color="r")
+    plt.axvline(x=0, color ="r")
+    
+    if i < 1:
+        plt.title("$\lambda$ = {}".format(P), fontsize="xx-large")
+    
+    plt.grid()
+plt.show()
 #plt.savefig("$\lambda$ = {}.png".format(P))
 
 
