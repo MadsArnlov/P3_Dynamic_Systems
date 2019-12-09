@@ -148,14 +148,13 @@ for i in range(0,4):
     P3p.append([-3*s-p,-6*s-p,-9*s-p,-12*s-p])
     
 for j in range(0,4):
-    p = i
     P1s.append([-3*s-p,-4*s-p,-5*s-p,-6*s-p])
     P2s.append([-3*s-p,-5*s-p,-7*s-p,-9*s-p])
     P3s.append([-3*s-p,-6*s-p,-9*s-p,-12*s-p])
     s += 0.5
 
 # Eigenvalues
-P = P1s
+P = P1p
 print("Eigenvalues:")
 for eigen in P:
     print(eigen)

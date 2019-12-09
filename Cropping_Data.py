@@ -8,7 +8,7 @@ Created on Thu Dec  5 08:22:56 2019
 import numpy as np
 import matplotlib.pyplot as plt
 
-folder = "m_0.200_eig_-3_-4_-5_-6"
+folder = "m_0.200_eig_-3_-6_-9_-12"
 Data_file1=np.loadtxt("Test_Recordings/"+folder+"/template.txt", delimiter=",")
 Data_file2=np.loadtxt("Test_Recordings/"+folder+"/scale_1.5.txt", delimiter=",")
 Data_file3=np.loadtxt("Test_Recordings/"+folder+"/scale_2.txt", delimiter=",")
@@ -97,4 +97,9 @@ plt.ylim(-0.15,0.15)
 plt.xlim(left=0,right=20)
 plt.xlabel("Time [s]",fontsize=14)
 plt.ylabel("Angle [rad]",fontsize=14)
-plt.savefig("Test_Recordings/"+folder+"/Scale_plot.png")
+#plt.savefig("Test_Recordings/"+folder+"/Scale_plot.png")
+
+cart_ac=[]
+for i in range(len(cart_vel4)-1):
+    ac=(cart_vel4[i+1]-cart_vel4[i])/sampling_time
+    cart_ac.append(ac)
