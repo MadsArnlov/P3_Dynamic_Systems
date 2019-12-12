@@ -8,6 +8,8 @@ Created on Thu Dec  5 11:01:24 2019
 """
 Created for P3-Project -- Aalborg University
 
+Used for easy generation of multiple plots of the linearised model.
+
 Authors: MATTEK 4.211
 """
 
@@ -27,7 +29,7 @@ l           = 0.3235 #Lenght of pendulum arm
 g           = 9.82 #Acceleration due to gravity
 mu          = 0.052 #Friction Coefficient
 F_c         = -(g*M)*mu #Coloumb Force
-displ       = 0.445 #x-position to stabilise system
+stab        = 0.445 #x-position to stabilise system
 
 #Inital values
 x_0         = 0.445 #Start postion of cart
@@ -73,15 +75,14 @@ X4[0] = theta_dot_0
 # System Definition
 # =============================================================================
 
-
 #Function definition describing the system
 def fun(t, z, K):
 
-    z_dot = (A - B @ K) @ (z-np.array([displ,0,0,0]))
+    z_dot = (A - B @ K) @ (z-np.array([stab,0,0,0]))
     return z_dot
 
 
-
+#RK4
 def runrk4(K):
     t = 0.0
     for k in range(N):
@@ -90,6 +91,7 @@ def runrk4(K):
         X2[k+1] = Xp[1]
         X3[k+1] = Xp[2]
         X4[k+1] = Xp[3]
+
 
 # =============================================================================
 # Plotting setup
@@ -111,7 +113,6 @@ def plotfig(P):
         plt.plot(t_arr, cart_pos)
         plt.ylim(0,0.9) #Position
         plt.xlim(0,5)
-#        plt.tick_params(labelsize = "xx-large")
         plt.legend(name, loc="upper right")
         plt.xlim(left=0)
         plt.subplot(2,1,2)
@@ -120,16 +121,14 @@ def plotfig(P):
         plt.plot(t_arr, pend_ang)
         plt.ylim(-0.15,0.15) #Angle
         plt.xlim(0,5)
-#        plt.tick_params(labelsize = "xx-large")
         plt.legend(name, loc="upper right")
     
-
 cart_pos = X1 #Cart positions
 pend_ang = X2 #Pendulum angles
 cart_vel = X3 #Cart velocities
 pend_vel = X4 #Pendulum velocities
 
-#Generate Eigenval
+#Generate Eigenvalues
 P1p = []
 P2p = []
 P3p = []
@@ -151,9 +150,8 @@ for j in range(0,4):
     P3s.append([-3*s-p,-6*s-p,-9*s-p,-12*s-p])
     s += 0.5
 
-# Eigenvalues
 plotfig(P3p)
-plt.savefig("Figures_of_models/Model_Ref3_Push.png")
+#plt.savefig("Figures_of_models/Model_Ref3_Push.png")
 
 
 
