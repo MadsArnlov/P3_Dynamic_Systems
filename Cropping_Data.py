@@ -8,11 +8,21 @@ Created on Thu Dec  5 08:22:56 2019
 import numpy as np
 import matplotlib.pyplot as plt
 
-folder = "m_0.200_eig_-3_-6_-9_-12"
+folder = "m_0.200_eig_-3_-4_-5_-6"
 Data_file1=np.loadtxt("Test_Recordings/"+folder+"/template.txt", delimiter=",")
-Data_file2=np.loadtxt("Test_Recordings/"+folder+"/scale_1.5.txt", delimiter=",")
-Data_file3=np.loadtxt("Test_Recordings/"+folder+"/scale_2.txt", delimiter=",")
-Data_file4=np.loadtxt("Test_Recordings/"+folder+"/scale_2.5.txt", delimiter=",")
+Data_file2=np.loadtxt("Test_Recordings/"+folder+"/displacement_-1.txt", delimiter=",")
+Data_file3=np.loadtxt("Test_Recordings/"+folder+"/displacement_-2.txt", delimiter=",")
+Data_file4=np.loadtxt("Test_Recordings/"+folder+"/displacement_-3.txt", delimiter=",")
+
+
+Data_file_curve=np.loadtxt("Test_Recordings/curveball.txt",delimiter=",")
+
+cart_pos_curve=Data_file_curve[:,0]
+pend_ang_curve=Data_file_curve[:,1]
+cart_vel_curve=Data_file_curve[:,2]
+pend_ang_vel_curve=Data_file_curve[:,3]
+input_current_curve=Data_file_curve[:,4]
+
 
 cart_pos1=Data_file1[:,0]
 pend_ang1=Data_file1[:,1]
@@ -97,7 +107,9 @@ plt.ylim(-0.15,0.15)
 plt.xlim(left=0,right=20)
 plt.xlabel("Time [s]",fontsize=14)
 plt.ylabel("Angle [rad]",fontsize=14)
-#plt.savefig("Test_Recordings/"+folder+"/Scale_plot.png")
+plt.savefig("Test_Recordings/"+folder+"/Displacement_plot.png")
+#plt.show()
+#plt.plot(cart_pos4[:min(n3,N_20)],pend_ang4[:min(n3,N_20)],) 
 
 cart_ac=[]
 for i in range(len(cart_vel4)-1):
