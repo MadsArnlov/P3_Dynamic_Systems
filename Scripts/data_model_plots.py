@@ -161,7 +161,7 @@ def fun(t, z):
 # =============================================================================
 eigen_template = [-3,-6,-9,-12] #Graps both position and angle
 s = 1 #Scale
-p = 0 #Displacement
+p = -2 #Displacement
 change = "displacement" #Displacement or Scale
 # =============================================================================
 
@@ -203,11 +203,11 @@ elif change == "scale":
 plt.plot(t_arr_model, model_cart_pos) #Model
 if p == 0 and s == 1:
     plt.plot(t_arr_data[:min(n1,N_20)], data1[0][:min(n1,N_20)]) #Template
-elif p == 1 or s == 1.5:
+elif p == -1 or s == 1.5:
     plt.plot(t_arr_data[:min(n2,N_20)], data1[1][:min(n2,N_20)]) #Displacement +1 or Scale 1.5
-elif p == 2 or s == 2:
+elif p == -2 or s == 2:
     plt.plot(t_arr_data[:min(n3,N_20)], data1[2][:min(n3,N_20)]) #Displacement +2 or Scale 2
-elif p == 3 or s == 2.5:
+elif p == -3 or s == 2.5:
     plt.plot(t_arr_data[:min(n4,N_20)], data1[3][:min(n4,N_20)]) #Displacement +3 or Scale 2.5
 
 plt.xlabel("Time [s]",fontsize=14)
@@ -220,11 +220,11 @@ plt.subplot(2,1,2)
 plt.plot(t_arr_model, model_pend_ang) #Model
 if p == 0 and s == 1:
     plt.plot(t_arr_data[:min(n1,N_20)], data2[0][:min(n1,N_20)]) #Template
-elif p == 1 or s == 1.5:
+elif p == -1 or s == 1.5:
     plt.plot(t_arr_data[:min(n2,N_20)], data2[1][:min(n2,N_20)]) #Displacement +1 or Scale 1.5
-elif p == 2 or s == 2:
+elif p == -2 or s == 2:
     plt.plot(t_arr_data[:min(n3,N_20)], data2[2][:min(n3,N_20)]) #Displacement +2 or Scale 2
-elif p == 3 or s == 2.5:
+elif p == -3 or s == 2.5:
     plt.plot(t_arr_data[:min(n4,N_20)], data2[3][:min(n4,N_20)]) #Displacement +3 or Scale 2.5
 
 plt.xlabel("Time [s]",fontsize=14)
