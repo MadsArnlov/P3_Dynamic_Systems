@@ -160,8 +160,8 @@ def fun(t, z):
 ##Change values here##
 # =============================================================================
 eigen_template = [-3,-6,-9,-12] #Graps both position and angle
-s = 1 #Scale
-p = -2 #Displacement
+s = 1 #Scale (1, 1.5, 2, 2.5)
+p = -2 #Displacement (0, -1, -2, -3)
 change = "displacement" #Displacement or Scale
 # =============================================================================
 
