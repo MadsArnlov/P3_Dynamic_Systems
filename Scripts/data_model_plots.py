@@ -206,7 +206,7 @@ if change == "displacement":
     plt.title("Template: {}, Displacement: {}".format(eigen_template,p), fontsize=20)
 elif change == "scale":
     plt.title("Template: {}, Scaling: {}".format(eigen_template,s), fontsize=20)
-plt.plot(t_arr_model, model_cart_pos) #Model
+plt.plot(t_arr_model, model_cart_pos, color="black") #Model
 if p == 0 and s == 1:
     plt.plot(t_arr_data[:min(n1,N_20)], data1[0][:min(n1,N_20)]) #Template
 elif p == -1 or s == 1.5:
@@ -223,7 +223,7 @@ plt.legend(["Model", "Data"])
 
 plt.subplot(2,1,2)
 
-plt.plot(t_arr_model, model_pend_ang) #Model
+plt.plot(t_arr_model, model_pend_ang, color="black") #Model
 if p == 0 and s == 1:
     plt.plot(t_arr_data[:min(n1,N_20)], data2[0][:min(n1,N_20)]) #Template
 elif p == -1 or s == 1.5:
