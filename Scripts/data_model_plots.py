@@ -136,6 +136,7 @@ def runRK4(init_pos):
         X3[k+1] = Xp[2]
         X4[k+1] = Xp[3]
 
+
 # =============================================================================
 # System Definition
 # =============================================================================
@@ -158,9 +159,9 @@ def fun(t, z):
 ##Change values here##
 # =============================================================================
 eigen_template = [-3,-4,-5,-6] #Graps both position and angle
-s = 1 #Scale (1, 1.5, 2, 2.5)
-p = -1 #Displacement (0, -1, -2, -3)
-change = "displacement" #Displacement or Scale
+s = 2.5 #Scale (1, 1.5, 2, 2.5)
+p = 0 #Displacement (0, -1, -2, -3)
+change = "scale" #Displacement or Scale
 # =============================================================================
 
 #Loading and cropping data
@@ -202,10 +203,10 @@ t_arr_data = np.linspace(0,sampling_time*N_data,N_data)
 plt.figure(figsize=(16,12))
 plt.subplot(2,1,1)
 plt.xlim(0,20)
-if change == "displacement":
-    plt.title("Template: {}, Displacement: {}".format(eigen_template,p), fontsize=20)
-elif change == "scale":
-    plt.title("Template: {}, Scaling: {}".format(eigen_template,s), fontsize=20)
+#if change == "displacement":
+#    plt.title("Template: {}, Displacement: {}".format(eigen_template,p), fontsize=20)
+#elif change == "scale":
+#    plt.title("Template: {}, Scaling: {}".format(eigen_template,s), fontsize=20)
 plt.plot(t_arr_model, model_cart_pos, color="black") #Model
 if p == 0 and s == 1:
     plt.plot(t_arr_data[:min(n1,N_20)], data1[0][:min(n1,N_20)]) #Template
@@ -237,5 +238,6 @@ plt.xlabel("Time [s]",fontsize=14)
 plt.ylabel("Angle [rad]",fontsize=14)
 plt.ylim(-0.15,0.15)
 plt.legend(["Model", "Data"])
+#plt.savefig("modeldatafig\Model_Data_{}_{}.png".format(eigen_model,change))
 
 
