@@ -89,10 +89,8 @@ l           = 0.3235 #Lenght of pendulum arm
 g           = 9.82 #Acceleration due to gravity
 mu          = 0.052 #Friction Coefficient
 F_c         = -(g*M)*mu #Coloumb Force
-stab        = 0.445 #x-position to stabilise system
+stab        = 0.4 #x-position to stabilise system
 
-#Inital values
-x_0         = 0.445 #Start postion of cart
 theta_0     = 0.14765 #Start angle of pendulum
 x_dot_0     = 0 #Start velocity of cart
 theta_dot_0 = 0 #Start angular velocity of pendulum
@@ -123,14 +121,14 @@ X2 = np.zeros(N + 1) #Pendulum angles
 X3 = np.zeros(N + 1) #Cart velocities
 X4 = np.zeros(N + 1) #Pendulum velocities
 
-#Inserting initial values into arrays
-X1[0] = x_0
-X2[0] = theta_0
-X3[0] = x_dot_0
-X4[0] = theta_dot_0
 
-def runRK4():
+def runRK4(init_pos):
     t = 0.0
+    #Inserting initial values into arrays
+    X1[0] = init_pos
+    X2[0] = theta_0
+    X3[0] = x_dot_0
+    X4[0] = theta_dot_0
     for k in range(N):
         Xp, t = rk4(fun, t, np.array([X1[k], X2[k], X3[k], X4[k]]), t_step)
         X1[k+1] = Xp[0]
@@ -159,20 +157,11 @@ def fun(t, z):
 
 ##Change values here##
 # =============================================================================
-eigen_template = [-3,-6,-9,-12] #Graps both position and angle
+eigen_template = [-3,-4,-5,-6] #Graps both position and angle
 s = 1 #Scale (1, 1.5, 2, 2.5)
-p = -2 #Displacement (0, -1, -2, -3)
+p = -1 #Displacement (0, -1, -2, -3)
 change = "displacement" #Displacement or Scale
 # =============================================================================
-
-#Calculating the gain matrix and running RK4
-eigen_model = [eigen_template[0]*s+p,eigen_template[1]*s+p,eigen_template[2]*s+p,eigen_template[3]*s+p]
-K = signal.place_poles(A,B,np.array(eigen_model)).gain_matrix
-runRK4()
-model_cart_pos = X1 #Cart positions
-model_pend_ang = X2 #Pendulum angles
-model_cart_vel = X3 #Cart velocities
-model_pend_vel = X4 #Pendulum velocities
 
 #Loading and cropping data
 data1, data2 = loadData(eigen_template, change)
@@ -180,6 +169,23 @@ n1 = len(data1[0])
 n2 = len(data1[1])
 n3 = len(data1[2])
 n4 = len(data1[3])
+
+#Calculating the gain matrix and running RK4
+eigen_model = [eigen_template[0]*s+p,eigen_template[1]*s+p,eigen_template[2]*s+p,eigen_template[3]*s+p]
+K = signal.place_poles(A,B,np.array(eigen_model)).gain_matrix
+if p == 0 and s == 1:
+    runRK4(data1[0][0])
+elif p == -1 or s == 1.5:
+    runRK4(data1[1][0])
+elif p == -2 or s == 2:
+    runRK4(data1[2][0])
+elif p == -3 or s == 2.5:
+    runRK4(data1[3][0])
+    
+model_cart_pos = X1 #Cart positions
+model_pend_ang = X2 #Pendulum angles
+model_cart_vel = X3 #Cart velocities
+model_pend_vel = X4 #Pendulum velocities
 
 #Sampling
 sampling_time=0.00667
