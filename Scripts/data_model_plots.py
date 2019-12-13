@@ -158,10 +158,10 @@ def fun(t, z):
 
 ##Change values here##
 # =============================================================================
-eigen_template = [-3,-4,-5,-6] #Graps both position and angle
-s = 2.5 #Scale (1, 1.5, 2, 2.5)
-p = 0 #Displacement (0, -1, -2, -3)
-change = "scale" #Displacement or Scale
+eigen_template = [-3,-6,-9,-12] #Graps both position and angle
+s = 1 #Scale (1, 1.5, 2, 2.5)
+p = -3 #Displacement (0, -1, -2, -3)
+change = "displacement" #Displacement or Scale
 # =============================================================================
 
 #Loading and cropping data
@@ -223,6 +223,7 @@ plt.ylim(0,0.9)
 plt.legend(["Model", "Data"])
 
 plt.subplot(2,1,2)
+plt.xlim(0,20)
 
 plt.plot(t_arr_model, model_pend_ang, color="black") #Model
 if p == 0 and s == 1:
@@ -238,6 +239,6 @@ plt.xlabel("Time [s]",fontsize=14)
 plt.ylabel("Angle [rad]",fontsize=14)
 plt.ylim(-0.15,0.15)
 plt.legend(["Model", "Data"])
-#plt.savefig("modeldatafig\Model_Data_{}_{}.png".format(eigen_model,change))
+plt.savefig("modeldatafig\Model_Data_{}_{}.png".format(eigen_model,change))
 
 
